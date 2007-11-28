@@ -1,0 +1,18 @@
+== Spec Goodies Plugin
+
+A collection of utilities for use in writing RSpec specifications.
+
+=== More Information
+
+For more information, be sure to look through the documentation over at RubyForge:
+
+* http://faithfulcode.rubyforge.org/docs/spec_goodies
+
+You might also enjoy taking a look at the specs for the plugin:
+
+* http://faithfulcode.rubyforge.org/svn/plugins/trunk/spec_goodies/spec
+
+=== License
+
+The Spec Goodies plugin is released under the MIT-License and is Copyright (c)
+2007, Adam Williams and John W. Long.

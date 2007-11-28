@@ -1,0 +1,4 @@
+mysql:
+  :adapter: mysql
+  :username: root
+  :database: spec_goodies_spec
