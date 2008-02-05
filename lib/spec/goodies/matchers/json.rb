@@ -5,7 +5,7 @@ module Spec
       begin
         require 'json'
       rescue MissingSourceFile => e
-        raise "sudo gem install json, please: #{e.message}"
+        # no support for json
       end
       
       class HaveJson # :nodoc:

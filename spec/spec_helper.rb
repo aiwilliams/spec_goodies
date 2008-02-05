@@ -1,32 +1,25 @@
-require File.dirname(__FILE__) + "/../spec/environment"
+require 'rubygems'
+gem 'rspec'
+require 'spec'
+require 'activerecord'
 
-unless defined? DATABASE_ADAPTER
-  $: << "#{SPEC_ROOT}"
-  $: << "#{PLUGIN_ROOT}/lib"
-  $: << "#{RSPEC_ROOT}/lib"
-  $: << "#{ACTIONPACK_ROOT}/lib"
-  $: << "#{ACTIVERECORD_ROOT}/lib"
-  $: << "#{ACTIVESUPPORT_ROOT}/lib"
-  $: << "#{RSPEC_ON_RAILS_ROOT}/lib"
+require 'logger'
+RAILS_DEFAULT_LOGGER = Logger.new($STDOUT)
+RAILS_DEFAULT_LOGGER.level = Logger::DEBUG
+ActiveRecord::Base.logger = RAILS_DEFAULT_LOGGER
+ActiveRecord::Base.configurations = {'mysql' => {'adapter' => 'mysql', 'username' => 'root', 'database' => 'spec_goodies_test'}}
+ActiveRecord::Base.establish_connection 'mysql'
 
-  require 'active_support'
-  require 'active_record'
-  require 'action_controller'
-  require 'action_view'
-  
-  require 'spec'
-  require 'spec/rails'
-
-  require 'spec/goodies'
-  require 'logger'
-
-  RAILS_DEFAULT_LOGGER = Logger.new("#{SUPPORT_TEMP}/test.log")
-  RAILS_DEFAULT_LOGGER.level = Logger::DEBUG
-  ActiveRecord::Base.logger = RAILS_DEFAULT_LOGGER
-  
-  DATABASE_ADAPTER = ENV['DB'] || 'sqlite3'
-  ActiveRecord::Base.configurations = YAML.load(IO.read(DB_CONFIG_FILE))
-  ActiveRecord::Base.establish_connection DATABASE_ADAPTER
-  
-  require 'models'
+ActiveRecord::Schema.define do
+  create_table "people", :force => true do |t|
+    t.column "first_name", :string
+    t.column "last_name", :string
+  end
 end
+
+class Person < ActiveRecord::Base
+  validates_presence_of :first_name
+  validates_length_of :first_name, :within => 3..20
+end
+
+require File.dirname(__FILE__) + '/../lib/spec/goodies'
